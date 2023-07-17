@@ -29,7 +29,9 @@ const reducer = (state = initialState, action) => {
           ...selected,
           votes: selected.votes + 1,
         };
-        return state.map((item) => (item.id === id ? updatedAncedote : item));
+        return state
+          .map((item) => (item.id === id ? updatedAncedote : item))
+          .sort((a, b) => b.votes - a.votes);
       }
       break;
     case "CREATE":
