@@ -3,6 +3,7 @@ import { filter } from "../reducers/filterReducer";
 const Filter = () => {
   const dispatch = useDispatch();
   const handleChange = (event) => {
+    // input-field value is in variable event.target.value
     dispatch(filter(event.target.value));
   };
   const style = {
