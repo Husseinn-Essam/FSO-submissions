@@ -69,9 +69,8 @@ const App = () => {
               setTimeout(() => setSucc(null), 5000);
             })
             .catch((error) => {
-              console.log("Error updating person:", error);
-              console.log(existingPerson);
-              catchDeletedError(existingPerson.name);
+              setErr(error.response.data);
+              setTimeout(() => setErr(null), 5000);
             });
         }
       }
@@ -86,7 +85,8 @@ const App = () => {
           setTimeout(() => setSucc(null), 5000);
         })
         .catch((error) => {
-          console.log("Error adding person:", error);
+          setErr(error.response.data);
+          setTimeout(() => setErr(null), 5000);
         });
     }
   };

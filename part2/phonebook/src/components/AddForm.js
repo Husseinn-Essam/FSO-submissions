@@ -13,17 +13,9 @@ const AddForm = ({
         <div>
           name: <input value={newName} onChange={handleChange(setNewName)} />
         </div>
-
-        <div>debug: {newName}</div>
         <div>
-          Number:{" "}
-          <input
-            value={newNum}
-            type="number"
-            onChange={handleChange(setNewNum)}
-          />
+          Number: <input value={newNum} onChange={handleChange(setNewNum)} />
         </div>
-        <div>debug: {newNum}</div>
         <div>
           <button type="submit">add</button>
         </div>
