@@ -2,9 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import App from "./App";
+import { NotifContextProvider } from "./components/NotifContext";
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
-    <App />
+    <NotifContextProvider>
+      <App />
+    </NotifContextProvider>
   </QueryClientProvider>
 );
