@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import anecdotesServices from "../services/anecdotesServices";
 const anecdotesAtStart = [
   "If it hurts, do it more often",
   "Adding manpower to a late software project makes it later!",
@@ -8,18 +8,6 @@ const anecdotesAtStart = [
   "Premature optimization is the root of all evil.",
   "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
 ];
-
-// const getId = () => (100000 * Math.random()).toFixed(0);
-
-// const asObject = (anecdote) => {
-//   return {
-//     content: anecdote,
-//     id: getId(),
-//     votes: 0,
-//   };
-// };
-
-// const initialState = anecdotesAtStart.map(asObject);
 
 const anecdotesSlice = createSlice({
   name: "anecdotes",
@@ -38,13 +26,7 @@ const anecdotesSlice = createSlice({
           .sort((a, b) => b.votes - a.votes);
       }
     },
-    create(state, action) {
-      const newAnecdote = {
-        content: action.payload,
-        votes: 0,
-      };
-      state.push(newAnecdote);
-    },
+
     append(state, action) {
       state.push(action.payload);
     },
@@ -53,6 +35,20 @@ const anecdotesSlice = createSlice({
     },
   },
 });
+
+export const initiializeApp = () => {
+  return async (dispatch) => {
+    const anecdotes = await anecdotesServices.getAll();
+    dispatch(set(anecdotes));
+  };
+};
+
+export const createAnecdote = (content) => {
+  return async (dispatch) => {
+    const newAnecdote = await anecdotesServices.addNew(content);
+    dispatch(append(newAnecdote));
+  };
+};
 
 export const { vote, create, append, set } = anecdotesSlice.actions;
 export default anecdotesSlice.reducer;
