@@ -12,5 +12,10 @@ const addNew = async (content) => {
   const response = await axios.post(baseUrl, object);
   return response.data;
 };
+
+const update = async (objToUpdate) => {
+  const response = await axios.put(`${baseUrl}/${objToUpdate.id}`, objToUpdate);
+  return response.data;
+};
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, addNew };
+export default { getAll, addNew, update };
