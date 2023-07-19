@@ -6,6 +6,7 @@ import {
   Link,
   useParams,
   useMatch,
+  useNavigate,
 } from "react-router-dom";
 
 const Menu = () => {
@@ -154,6 +155,8 @@ const App = () => {
   //Notif
   const [notification, setNotification] = useState("");
 
+  const navigate = useNavigate();
+
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000);
     setAnecdotes(anecdotes.concat(anecdote));
@@ -161,6 +164,7 @@ const App = () => {
     setTimeout(() => {
       setNotification("");
     }, 5000);
+    navigate("/anecdotes");
   };
 
   const anecdoteById = (id) => anecdotes.find((a) => a.id === id);
