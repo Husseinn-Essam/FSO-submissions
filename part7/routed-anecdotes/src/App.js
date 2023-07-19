@@ -130,6 +130,10 @@ const CreateNew = (props) => {
   );
 };
 
+const Notification = ({ message }) => {
+  return message ? <div>You have created the blog {message}</div> : null;
+};
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -147,12 +151,16 @@ const App = () => {
       id: 2,
     },
   ]);
-
+  //Notif
   const [notification, setNotification] = useState("");
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000);
     setAnecdotes(anecdotes.concat(anecdote));
+    setNotification(anecdote.content);
+    setTimeout(() => {
+      setNotification("");
+    }, 5000);
   };
 
   const anecdoteById = (id) => anecdotes.find((a) => a.id === id);
@@ -176,6 +184,7 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification message={notification} />
       <Routes>
         <Route
           path="/anecdotes"
