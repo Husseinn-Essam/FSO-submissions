@@ -1,0 +1,96 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #479beb;
+  color: #fff;
+  padding: 10px 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.navbar h2 {
+  font-size: 24px;
+}
+
+.navbar a {
+  color: #479beb;
+  text-decoration: none;
+  margin-right: 20px;
+  border: solid 4px #fff;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.navbar p {
+  margin: 0;
+  margin-left: 20px;
+}
+
+.navbar button {
+  background-color: #fff;
+  color: #479beb;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar button:hover {
+  background-color: #f0f0f0;
+}
+.login {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: auto;
+  align-items: baseline;
+}
+@media screen and (max-width: 768px) {
+  .login p {
+    display: none;
+  }
+  .navbar {
+    flex-direction: column;
+  }
+  .login {
+    align-self: center;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 70px;
+  font-size: 20px;
+  color: #479beb;
+  text-decoration: none;
+  margin-right: 20px;
+  border-radius: 5px;
+  padding: 2px;
+  gap: 10px;
+}
+
+#createBlog {
+  background-color: transparent;
+  color: #479beb;
+  font-size: 20px;
+  padding: 0;
+  margin-right: 20px;
+  border: solid 4px #fff;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+#createBlog:hover {
+  text-decoration: underline;
+}

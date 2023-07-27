@@ -192,7 +192,7 @@ const App = () => {
 
     setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)));
   };
-
+  // usematch hook
   const match = useMatch("/anecdotes/:id");
   const anecdote = match
     ? anecdotes.find((a) => a.id === Number(match.params.id))

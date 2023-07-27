@@ -1,59 +1,62 @@
-import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import blogService from "../services/blogs";
+import styles from "../styles/blog.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faThumbsUp,
+  faComment,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+const Blog = ({ blog }) => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const likeBlogMutation = useMutation({
+    mutationFn: blogService.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["blogs"]);
+    },
+  });
 
-const Blog = ({ blog, user, likeBlog, removeBlog }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: "solid",
-    borderWidth: 1,
-    marginBottom: 5,
-  };
-  const isBlogCreatedByUser = user && blog.user && user.id === blog.user.id;
-  const [blogObject, setBlogObject] = useState(blog);
-  const [details, setDetails] = useState(false);
-  const toggleDetails = () => {
-    details ? setDetails(false) : setDetails(true);
-  };
-  const handleLike = async () => {
+  const handleLike = () => {
     try {
-      const updatedBlog = await likeBlog(blogObject);
-      setBlogObject(updatedBlog);
+      const newblog = {
+        ...blog,
+        likes: blog.likes + 1,
+      };
+      likeBlogMutation.mutate(newblog);
     } catch (error) {
       console.log("Failed to update likes", error);
     }
   };
+
   return (
-    <div style={blogStyle}>
-      {!details ? (
-        <div className="blogHead">
-          {blog.title} {blog.author}
-          <button id="view" onClick={toggleDetails}>
-            View
+    <div className={styles["blog"]}>
+      <img src={`https://picsum.photos/id/4/5000/3333`} />
+      <div className={styles["blog-main"]}>
+        <p className={styles["blog-title"]}>{blog.title}</p>
+        <p className={styles["content"]}>{blog.content}</p>
+      </div>
+      <div className={styles["act-container"]}>
+        <Link id={styles["readmore"]} to={`/blogs/${blog.id}`}>
+          Read More
+        </Link>
+        <div>
+          <button onClick={handleLike} id={styles["like"]}>
+            <FontAwesomeIcon icon={faThumbsUp} /> Like ({blog.likes})
+          </button>
+          <button onClick={() => navigate(`/blogs/${blog.id}`)}>
+            <FontAwesomeIcon icon={faComment} /> Comment ({blog.comments.length}
+            )
           </button>
         </div>
-      ) : (
-        <div className="blogDetails">
-          <p>
-            {blog.title} {blog.author}{" "}
-            <button onClick={toggleDetails} id="hide">
-              Hide
-            </button>
-          </p>
-          <p>{blog.url}</p>
-          <div>
-            <div className="likes">{`Likes: ${blogObject.likes}`} </div>
-            <button onClick={handleLike} id="like">
-              like
-            </button>
-          </div>
-          <p>{blog.user.username}</p>
-          {isBlogCreatedByUser && (
-            <button onClick={() => removeBlog(blog)} id="remove-btn">
-              remove
-            </button>
-          )}
-        </div>
-      )}
+      </div>
+      <div className={styles["author"]}>
+        <p> {blog.user.username}</p>
+        <FontAwesomeIcon icon={faUser} style={{ color: "#479beb" }} />
+      </div>
     </div>
   );
 };

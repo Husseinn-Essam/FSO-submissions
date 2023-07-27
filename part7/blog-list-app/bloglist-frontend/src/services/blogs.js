@@ -7,8 +7,12 @@ const setToken = (newToken) => {
 };
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+  try {
+    const request = axios.get(baseUrl);
+    return request.then((response) => response.data);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const create = async (newObj) => {
@@ -19,8 +23,8 @@ const create = async (newObj) => {
   return response.data;
 };
 
-const update = async (id, newObj) => {
-  const request = await axios.put(`${baseUrl}/${id}`, newObj);
+const update = async (newObj) => {
+  const request = await axios.put(`${baseUrl}/${newObj.id}`, newObj);
   const data = await request.data;
   return data;
 };
@@ -29,8 +33,23 @@ const remove = async (id) => {
   const config = {
     headers: { Authorization: token },
   };
-
   await axios.delete(`${baseUrl}/${id}`, config);
 };
 
-export default { getAll, create, update, remove, setToken };
+const comment = async (inputObj) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.post(
+    `${baseUrl}/${inputObj.blogId}/comments`,
+    {
+      commentText: inputObj.commentText,
+      user: inputObj.userId,
+    },
+    config
+  );
+  const data = await response.data;
+  return data;
+};
+
+export default { getAll, create, update, remove, setToken, comment };
